@@ -1,22 +1,22 @@
 import Web3 from "web3";
 
-let INFURA_API_KEY = import.meta.env.VITE_INFURA_API_KEY;
-let provider = `https://mainnet.infura.io/v3/${INFURA_API_KEY}`;
+// let INFURA_API_KEY = import.meta.env.VITE_INFURA_API_KEY;
+// let provider = `https://mainnet.infura.io/v3/${INFURA_API_KEY}`;
+let provider = "https://mainnet.infura.io/v3/1175108411a040bcbc6a3d41137b98a7";
 let web3Provider = new Web3.providers.HttpProvider(provider);
 let web3 = new Web3(web3Provider);
 
-async function getBlock() {
-    let records = [];
-    let latestBlock = await web3.eth.getBlockNumber();
-    let block = await web3.eth.getBlock(latestBlock);
+async function getLatestBlock() {
+    let block = await web3.eth.getBlock("latest");
 
     return block;
+}
 
-    // for (let i = 0; i < 30; i++) {
-    //     let block = await web3.eth.getBlock(num);
-    //     records.push(block);
-    //     num -= 1;
-    // }
+async function getBlock(blockNum) {
+    let records = [];
+    let block = await web3.eth.getBlock(blockNum);
+
+    return block;
 }
 
 async function parseTxs(block) {
@@ -36,4 +36,4 @@ async function printTxs() {
     console.log(txs);
 }
 
-export { getBlock, parseTxs };
+export { getBlock, getLatestBlock, parseTxs };
