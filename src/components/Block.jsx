@@ -9,8 +9,9 @@ import {
     TableCaption,
     TableContainer,
 } from "@chakra-ui/react";
-
 import { useEffect } from "react";
+import Transactions from "./Transactions";
+import { useNavigate } from "react-router-dom";
 
 function Block(props) {
     const data = (({
@@ -39,37 +40,54 @@ function Block(props) {
         size,
     }))(props.block);
 
-    // useEffect(() => {
-    //     console.log(
-    //         Object.entries(data).map(([key, value]) =>
-    //             console.log(key + ":" + value)
-    //         )
-    //     );
-    // }, [data]);
+    const navigate = useNavigate();
+
+    function toTransaction() {
+        navigate("/transactions");
+    }
 
     return (
-        <TableContainer>
-            <Table variant="striped" colorScheme="gray">
-                <TableCaption>
-                    Imperial to metric conversion factors
-                </TableCaption>
-                <Thead>
-                    <Tr>
-                        <Th>Overview</Th>
-                    </Tr>
-                </Thead>
-                <Tbody>
-                    {Object.entries(data).map(([key, value]) => {
-                        return (
-                            <Tr>
-                                <Td>{key}</Td>
-                                <Td>{value}</Td>
-                            </Tr>
-                        );
-                    })}
-                </Tbody>
-            </Table>
-        </TableContainer>
+        <div>
+            <TableContainer>
+                <Table
+                    variant="striped"
+                    colorScheme="gray"
+                    className="table-fixed"
+                >
+                    <TableCaption>
+                        Data for Ethereum Block #: {data.number}
+                    </TableCaption>
+                    <Thead>
+                        <Tr>
+                            <Th>Overview</Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {Object.entries(data).map(([key, value]) => {
+                            if (key === "transactions") {
+                                return (
+                                    <Tr>
+                                        <Td>{key}</Td>
+                                        <Td className="truncate">
+                                            <button onClick={toTransaction}>
+                                                view transactions
+                                            </button>
+                                        </Td>
+                                    </Tr>
+                                );
+                            } else {
+                                return (
+                                    <Tr>
+                                        <Td>{key}</Td>
+                                        <Td className="truncate">{value}</Td>
+                                    </Tr>
+                                );
+                            }
+                        })}
+                    </Tbody>
+                </Table>
+            </TableContainer>
+        </div>
     );
 }
 
