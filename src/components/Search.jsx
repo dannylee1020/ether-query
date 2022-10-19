@@ -1,23 +1,45 @@
 import { GoSearch } from "react-icons/go";
 import { getBlock, getLatestBlock } from "../api/extract";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useQuery } from "react-query";
 import Block from "./Block";
 
 const Search = () => {
     const [blockNum, setBlockNum] = useState();
     const [block, setBlock] = useState();
 
-    async function queryBlock() {
-        let blockData;
+    const callBlock = () =>
+        useQuery(
+            ["block", blockNum],
+            () => {
+                getBlock(blockNum);
+            },
+            {
+                enabled: false,
+            }
+        );
+
+    const callLatestBlock = () =>
+        useQuery("block_latest", getLatestBlock, {
+            enabled: false,
+        });
+
+    const latestBlock = callLatestBlock();
+    const nBlock = callBlock();
+
+    const handleClick = async (e) => {
+        let res;
 
         if (!blockNum) {
-            blockData = await getLatestBlock();
+            await latestBlock.refetch();
+            res = latestBlock.data;
         } else {
-            blockData = await getBlock(blockNum);
+            await nBlock.refetch();
+            res = nBlock.data;
         }
 
-        setBlock(blockData);
-    }
+        setBlock(res);
+    };
 
     function handleInput(e) {
         setBlockNum(e.target.value);
@@ -33,7 +55,7 @@ const Search = () => {
                     onChange={handleInput}
                 ></input>
                 <div className="border-2 h-7 w-8 flex items-center justify-center">
-                    <GoSearch onClick={queryBlock}></GoSearch>
+                    <GoSearch onClick={handleClick}></GoSearch>
                 </div>
             </div>
             <div className="w-2/3">
