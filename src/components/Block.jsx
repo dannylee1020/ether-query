@@ -9,8 +9,6 @@ import {
     TableCaption,
     TableContainer,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
-import Transactions from "./Transactions";
 import { useNavigate } from "react-router-dom";
 
 function Block(props) {
