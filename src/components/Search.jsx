@@ -8,24 +8,11 @@ const Search = () => {
     const [blockNum, setBlockNum] = useState();
     const [block, setBlock] = useState();
 
-    const callBlock = () =>
-        useQuery(
-            ["block", blockNum],
-            () => {
-                getBlock(blockNum);
-            },
-            {
-                enabled: false,
-            }
-        );
+    const nBlock = useQuery(["block", blockNum], () => {
+        getBlock(blockNum);
+    });
 
-    const callLatestBlock = () =>
-        useQuery("block_latest", getLatestBlock, {
-            enabled: false,
-        });
-
-    const latestBlock = callLatestBlock();
-    const nBlock = callBlock();
+    const latestBlock = useQuery("latest_block", getLatestBlock, {});
 
     const handleClick = async (e) => {
         let res;
