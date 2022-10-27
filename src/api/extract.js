@@ -18,12 +18,12 @@ async function getBlock(blockNum) {
     return block;
 }
 
-async function parseTxs(block) {
+async function parseTxs(txs) {
     let txsList = [];
 
     for (let i = 0; i <= 10; i++) {
-        let txs = await web3.eth.getTransaction(block["transactions"][i]);
-        txsList.push(txs);
+        let data = await web3.eth.getTransaction(txs[i]);
+        txsList.push(data);
     }
 
     return txsList;
