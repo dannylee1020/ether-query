@@ -1,14 +1,3 @@
-import {
-    Table,
-    Thead,
-    Tbody,
-    Tfoot,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-    TableContainer,
-} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 function Block(props) {
@@ -45,46 +34,38 @@ function Block(props) {
     }
 
     return (
-        <div>
-            <TableContainer>
-                <Table
-                    variant="striped"
-                    colorScheme="gray"
-                    className="table-fixed"
-                >
-                    <TableCaption>
-                        Data for Ethereum Block #: {data.number}
-                    </TableCaption>
-                    <Thead>
-                        <Tr>
-                            <Th>Overview</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {Object.entries(data).map(([key, value]) => {
-                            if (key === "transactions") {
-                                return (
-                                    <Tr>
-                                        <Td>{key}</Td>
-                                        <Td className="truncate">
-                                            <button onClick={toTransaction}>
-                                                view transactions
-                                            </button>
-                                        </Td>
-                                    </Tr>
-                                );
-                            } else {
-                                return (
-                                    <Tr>
-                                        <Td>{key}</Td>
-                                        <Td className="truncate">{value}</Td>
-                                    </Tr>
-                                );
-                            }
-                        })}
-                    </Tbody>
-                </Table>
-            </TableContainer>
+        <div className="flex flex-col items-center">
+            <table className="table table-normal table-fixed w-2/5">
+                <thead>
+                    <tr>
+                        <th>Overview</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {Object.entries(data).map(([key, value]) => {
+                        if (key === "transactions") {
+                            return (
+                                <tr className="bg-white">
+                                    <td>{key}</td>
+                                    <td className="truncate">
+                                        <button onClick={toTransaction}>
+                                            view transactions
+                                        </button>
+                                    </td>
+                                </tr>
+                            );
+                        } else {
+                            return (
+                                <tr className="bg-white">
+                                    <td className="pr-20">{key}</td>
+                                    <td className="truncate">{value}</td>
+                                </tr>
+                            );
+                        }
+                    })}
+                </tbody>
+            </table>
         </div>
     );
 }
