@@ -2,18 +2,6 @@ import { parseTxs, getLatestBlock, getBlock } from "../api/extract";
 import { useQuery } from "react-query";
 import { useEffect, useState } from "react";
 
-import {
-    Table,
-    Thead,
-    Tbody,
-    Tfoot,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-    TableContainer,
-} from "@chakra-ui/react";
-
 const Transactions = () => {
     const latestBlock = useQuery("latest_block", getLatestBlock);
     const nBlock = useQuery("block", getBlock);
@@ -47,48 +35,44 @@ const Transactions = () => {
     }
 
     return (
-        <div>
+        <div className="flex justify-center">
             {txData ? (
-                <TableContainer>
-                    <Table
-                        className="table-fixed"
-                        variant="striped"
-                        colorschem="gray"
-                    >
-                        <Thead>
-                            <Tr>
-                                <Th>Hash</Th>
-                                <Th>Block</Th>
-                                <Th>From</Th>
-                                <Th>To</Th>
-                                <Th>Value</Th>
-                                <Th>Txn Fee</Th>
-                            </Tr>
-                        </Thead>
-                        <Tbody>
+                <div className="mt-10 flex justify-center">
+                    <table className="table table-compact">
+                        <thead>
+                            <tr>
+                                <th>Hash</th>
+                                <th>Block</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Value</th>
+                                <th>Txn Fee</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             {txData.map((data) => {
                                 return (
-                                    <Tr>
-                                        <Td className="truncate">
+                                    <tr>
+                                        <td className="truncate">
                                             {data.hash}
-                                        </Td>
-                                        <Td className="truncate">
+                                        </td>
+                                        <td className="truncate">
                                             {data.blockNumber}
-                                        </Td>
-                                        <Td className="truncate">
+                                        </td>
+                                        <td className="truncate">
                                             {data.from}
-                                        </Td>
-                                        <Td className="truncate">{data.to}</Td>
-                                        <Td className="truncate">
+                                        </td>
+                                        <td className="truncate">{data.to}</td>
+                                        <td className="truncate">
                                             {data.value}
-                                        </Td>
-                                        <Td className="truncate">{data.gas}</Td>
-                                    </Tr>
+                                        </td>
+                                        <td className="truncate">{data.gas}</td>
+                                    </tr>
                                 );
                             })}
-                        </Tbody>
-                    </Table>
-                </TableContainer>
+                        </tbody>
+                    </table>
+                </div>
             ) : null}
         </div>
     );
