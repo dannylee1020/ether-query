@@ -21,7 +21,7 @@ async function getBlock(blockNum) {
 async function parseTxs(txs) {
     let txsList = [];
 
-    for (let i = 0; i <= 10; i++) {
+    for (let i = 0; i <= 30; i++) {
         let data = await web3.eth.getTransaction(txs[i]);
         txsList.push(data);
     }
