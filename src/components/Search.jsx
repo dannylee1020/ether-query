@@ -1,4 +1,6 @@
 import { GoSearch } from "react-icons/go";
+import { MdOutlineDarkMode } from "react-icons/md";
+import { BsSun } from "react-icons/bs";
 import { getBlock, getLatestBlock } from "../api/extract";
 import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
@@ -62,19 +64,22 @@ const Search = () => {
     }
 
     return (
-        <div className="flex flex-col w-full items-center gap-10 h-screen">
+        <div className="flex flex-col items-center gap-10 h-screen">
             <div className="flex justify-center items-center mt-10 w-2/3">
                 <input
                     type="text"
                     placeholder="Search by block number / hash"
-                    className="border-2 border-slate-300 w-2/3 placeholder:text-sm"
+                    className="border-[1.3px] border-slate-300 w-2/3 placeholder:text-sm border-r-0 h-8 pl-3"
                     onChange={handleInput}
                 ></input>
-                <div className="border-2 border-slate-300 h-7 w-8 flex items-center justify-center">
+                <button className="btn btn-sm btn-square rounded-none">
                     <GoSearch onClick={handleClick}></GoSearch>
-                </div>
-                <button onClick={toggleDark}>Toggle</button>
+                </button>
+                <button onClick={toggleDark} className="text-2xl ml-10">
+                    {theme === "dark" ? <BsSun /> : <MdOutlineDarkMode />}
+                </button>
             </div>
+
             <div>{block ? <Block block={block} /> : null}</div>
         </div>
     );
