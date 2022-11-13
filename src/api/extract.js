@@ -12,8 +12,7 @@ async function getLatestBlock() {
 }
 
 async function getBlock(blockNum) {
-    let records = [];
-    let block = await web3.eth.getBlock(blockNum);
+    let block = await web3.eth.getBlock(parseInt(blockNum));
 
     return block;
 }
@@ -21,7 +20,7 @@ async function getBlock(blockNum) {
 async function parseTxs(txs) {
     let txsList = [];
 
-    for (let i = 0; i <= 30; i++) {
+    for (let i = 0; i <= 10; i++) {
         let data = await web3.eth.getTransaction(txs[i]);
         txsList.push(data);
     }
@@ -30,9 +29,8 @@ async function parseTxs(txs) {
 }
 
 async function printTxs() {
-    let block = await getBlock();
-    const txs = await parseTxs(block);
-    console.log(txs);
+    let block = await getBlock(15930277);
+    console.log(block);
 }
 
-export { getBlock, getLatestBlock, parseTxs };
+export { getBlock, getLatestBlock, parseTxs, web3 };
