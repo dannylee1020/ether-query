@@ -1,42 +1,15 @@
-import { parseTxs, getLatestBlock, getBlock } from "../api/extract";
 import { useQuery } from "react-query";
-import { useEffect, useState } from "react";
 
-const Transactions = () => {
-    const latestBlock = useQuery("latest_block", getLatestBlock);
-    const nBlock = useQuery("block", getBlock);
+const Transactions = (props) => {
+    const txData = useQuery("txs", props.queryTxs);
 
-    const [txData, setTxData] = useState();
-
-    useEffect(() => {
-        const queryTxs = async () => {
-            let transactions = await getLatestData();
-            const txsList = await getTransactions(transactions);
-            setTxData(txsList);
-        };
-
-        queryTxs();
-    }, []);
-
-    function getLatestData() {
-        let transactions;
-
-        latestBlock.dataUpdatedAt > nBlock.dataUpdatedAt
-            ? (transactions = latestBlock.data.transactions)
-            : (transactions = nBlock.data.transactions);
-
-        return transactions;
-    }
-
-    async function getTransactions(tsx) {
-        let txsList = await parseTxs(tsx);
-
-        return txsList;
-    }
+    const generateKey = (pre) => {
+        return `${pre}_${new Date().getTime()}`;
+    };
 
     return (
         <div className="flex justify-center">
-            {txData ? (
+            {txData.data ? (
                 <div className="mt-10 flex justify-center">
                     <table className="table table-compact">
                         <thead>
@@ -50,9 +23,9 @@ const Transactions = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {txData.map((data) => {
+                            {txData.data.map((data) => {
                                 return (
-                                    <tr>
+                                    <tr key={generateKey(data.hash)}>
                                         <td className="truncate">
                                             {data.hash}
                                         </td>
