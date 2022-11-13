@@ -1,5 +1,5 @@
 # Overview
-Simple web app to query data from Ethereum mainnet blockchain
+Simple web app for querying data from Ethereum mainnet blockchain.
 
-# Tech
-Using Infura API for Ethereum node and web3.js API for querying data on mainnet
+## Tech
+Using Infura API for spinning up Ethereum node and web3.js API for sending JSON-RPC call to mainnet network
