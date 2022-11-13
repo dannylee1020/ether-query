@@ -33,6 +33,10 @@ function Block(props) {
         navigate("/transactions");
     }
 
+    const generateKey = (pre) => {
+        return `${pre}_${new Date().getTime()}`;
+    };
+
     return (
         <div className="flex flex-col items-center">
             <table className="table table-normal table-fixed w-2/5">
@@ -46,7 +50,10 @@ function Block(props) {
                     {Object.entries(data).map(([key, value]) => {
                         if (key === "transactions") {
                             return (
-                                <tr className="bg-white">
+                                <tr
+                                    className="bg-white"
+                                    key={generateKey(value)}
+                                >
                                     <td>{key}</td>
                                     <td className="truncate">
                                         <button onClick={toTransaction}>
@@ -57,7 +64,10 @@ function Block(props) {
                             );
                         } else {
                             return (
-                                <tr className="bg-white">
+                                <tr
+                                    className="bg-white"
+                                    key={generateKey(value)}
+                                >
                                     <td className="pr-20">{key}</td>
                                     <td className="truncate">{value}</td>
                                 </tr>
